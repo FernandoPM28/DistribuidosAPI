@@ -50,7 +50,26 @@ import {
   dashboard24HoursPerformanceChart,
 } from "variables/charts.js";
 
+import axios from 'axios'
+
 function Dashboard() {
+  const [coin, setCoin] = React.useState([]);
+
+  React.useEffect(() => 
+    { const fetchData = 
+    async () => { try 
+    { const response = await axios.get('https://api.coingecko.com/api/v3/coins/bitcoin');
+         console.log("O preço do biticoin em real é", response.data.market_data.current_price.brl);
+         setCoin(response.data);
+         console.log(coin)
+    
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    fetchData();
+    }, []);
+
   return (
     <>
       <PanelHeader
